@@ -1,0 +1,23 @@
+<svg width="1200" height="260" viewBox="0 0 1200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="260" rx="20" fill="#f8fafc"/>
+
+  <rect x="40" y="50" width="250" height="160" rx="14" fill="#e2e8f0"/>
+  <text x="68" y="102" fill="#0f172a" font-size="26" font-family="Segoe UI, Arial" font-weight="700">1. Capture</text>
+  <text x="68" y="140" fill="#334155" font-size="20" font-family="Segoe UI, Arial">copy / cut event</text>
+
+  <rect x="335" y="50" width="250" height="160" rx="14" fill="#dbeafe"/>
+  <text x="365" y="102" fill="#1e3a8a" font-size="26" font-family="Segoe UI, Arial" font-weight="700">2. Parse</text>
+  <text x="365" y="140" fill="#1e40af" font-size="20" font-family="Segoe UI, Arial">KaTeX / MathML</text>
+
+  <rect x="630" y="50" width="250" height="160" rx="14" fill="#dcfce7"/>
+  <text x="660" y="102" fill="#166534" font-size="26" font-family="Segoe UI, Arial" font-weight="700">3. Clean</text>
+  <text x="660" y="140" fill="#166534" font-size="20" font-family="Segoe UI, Arial">remove duplicate layers</text>
+
+  <rect x="925" y="50" width="235" height="160" rx="14" fill="#fef3c7"/>
+  <text x="955" y="102" fill="#92400e" font-size="26" font-family="Segoe UI, Arial" font-weight="700">4. Write</text>
+  <text x="955" y="140" fill="#92400e" font-size="20" font-family="Segoe UI, Arial">clipboard plain/html</text>
+
+  <path d="M300 130H325" stroke="#64748b" stroke-width="4"/>
+  <path d="M595 130H620" stroke="#64748b" stroke-width="4"/>
+  <path d="M890 130H915" stroke="#64748b" stroke-width="4"/>
+</svg>
