@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         ChatGPT -> Notion Copy Fix
+// @name         ChatGPT2Notion CleanPaste
 // @namespace    https://violentmonkey.github.io/
 // @version      0.2.0
-// @description  Force-clean copied text from ChatGPT before pasting into Notion.
+// @description  ChatGPT2Notion CleanPaste: clean duplicated math text before pasting into Notion.
 // @match        https://chatgpt.com/*
 // @match        https://chat.openai.com/*
 // @match        https://*.openai.com/*

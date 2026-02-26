@@ -1,7 +1,7 @@
-# ChatGPT to Notion Copy Fix ✨
+# ChatGPT2Notion CleanPaste ✨
 
 <p align="center">
-  <img src="./assets/hero.svg" alt="ChatGPT to Notion Copy Fix banner" width="100%" />
+  <img src="./assets/hero.svg" alt="ChatGPT2Notion CleanPaste banner" width="100%" />
 </p>
 
 <p align="center">
@@ -45,7 +45,7 @@
 ## ⚡ 快速安装（2 分钟）
 1. 安装浏览器扩展：`Violentmonkey（暴力猴）`
 2. 新建脚本，把下面文件内容粘贴进去并保存：
-   - [`chatgpt-to-notion-copy-fix.user.js`](./chatgpt-to-notion-copy-fix.user.js)
+   - [`chatgpt2notion-cleanpaste.user.js`](./chatgpt2notion-cleanpaste.user.js)
 3. 确认脚本为“已启用”
 4. 强制刷新 ChatGPT 页面后测试复制
 
