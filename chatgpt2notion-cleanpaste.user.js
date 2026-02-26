@@ -60,9 +60,21 @@
     return display === 'block' || display === 'true';
   }
 
+  function normalizeLatexForClipboard(latex) {
+    if (!latex) return '';
+    return latex
+      .replace(/\r\n/g, '\n')
+      .replace(/\u00a0/g, ' ')
+      .replace(/[ \t]*\n[ \t]*/g, ' ')
+      .replace(/[ \t]{2,}/g, ' ')
+      .trim();
+  }
+
   function replaceNodeWithLatex(node, latex, display) {
     if (!node || !latex) return;
-    const wrapped = display ? `$$${latex}$$` : `$${latex}$`;
+    const normalizedLatex = normalizeLatexForClipboard(latex);
+    if (!normalizedLatex) return;
+    const wrapped = display ? `$$${normalizedLatex}$$` : `$${normalizedLatex}$`;
     const replacement = document.createElement('span');
     replacement.setAttribute('data-copied-math', '1');
     replacement.textContent = wrapped;
