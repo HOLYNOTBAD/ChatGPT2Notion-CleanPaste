@@ -5,7 +5,7 @@
 </p>
 
 <p align="center">
-  <b>复制 ChatGPT 到 Notion 时，自动清理公式重复文本（Rbe 分身）</b>
+  <b>复制 ChatGPT 到 Notion 时，自动清理公式重复文本</b>
 </p>
 
 <p align="center">
