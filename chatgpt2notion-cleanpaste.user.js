@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         ChatGPT2Notion CleanPaste
 // @namespace    https://violentmonkey.github.io/
-// @version      0.2.0
+// @version      0.2.1
 // @description  ChatGPT2Notion CleanPaste: clean duplicated math text before pasting into Notion.
 // @match        https://chatgpt.com/*
 // @match        https://chat.openai.com/*
@@ -15,15 +15,6 @@
 
   const LATEX_ANNOTATION_SELECTOR = 'annotation[encoding="application/x-tex"]';
   const DEBUG = false;
-
-  function htmlEscape(text) {
-    return text
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#39;');
-  }
 
   function normalizeNewlines(text) {
     return text
@@ -159,8 +150,8 @@
     return cleanText;
   }
 
-  function selectionToCleanText(selection) {
-    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return '';
+  function buildCleanPayloadFromSelection(selection) {
+    if (!selection || selection.rangeCount === 0 || selection.isCollapsed) return null;
 
     const wrapper = document.createElement('div');
 
@@ -173,37 +164,38 @@
     }
 
     replaceMathNodesWithLatex(wrapper);
+    const cleanHtml = wrapper.innerHTML;
+
+    const textWrapper = wrapper.cloneNode(true);
 
     // Preserve line breaks for common block elements before text extraction.
-    wrapper.querySelectorAll('p, div, li, pre, h1, h2, h3, h4, h5, h6, tr').forEach((el) => {
+    textWrapper.querySelectorAll('p, div, li, pre, h1, h2, h3, h4, h5, h6, tr').forEach((el) => {
       if (el.lastChild && el.lastChild.nodeName !== 'BR') {
         el.appendChild(document.createElement('br'));
       }
     });
 
-    const cleanText = normalizeNewlines(wrapper.innerText || wrapper.textContent || '');
+    const cleanText = normalizeNewlines(textWrapper.innerText || textWrapper.textContent || '');
     const renderedText = normalizeNewlines(selection.toString() || '');
-    return pickBestText(cleanText, renderedText);
-  }
-
-  function toSimpleHtmlFromText(text) {
-    const escaped = htmlEscape(text);
-    return escaped.replace(/\n/g, '<br>');
+    return {
+      text: pickBestText(cleanText, renderedText),
+      html: cleanHtml,
+    };
   }
 
   document.addEventListener(
     'copy',
     (event) => {
       const selection = window.getSelection();
-      const cleanText = selectionToCleanText(selection);
-      if (!cleanText) return;
+      const payload = buildCleanPayloadFromSelection(selection);
+      if (!payload?.text) return;
 
       event.preventDefault();
       event.stopImmediatePropagation();
       event.clipboardData?.clearData();
-      event.clipboardData?.setData('text/plain', cleanText);
-      event.clipboardData?.setData('text/html', toSimpleHtmlFromText(cleanText));
-      logDebug('copy text =>', cleanText);
+      event.clipboardData?.setData('text/plain', payload.text);
+      event.clipboardData?.setData('text/html', payload.html || payload.text);
+      logDebug('copy text =>', payload.text);
     },
     true
   );
@@ -212,15 +204,15 @@
     'cut',
     (event) => {
       const selection = window.getSelection();
-      const cleanText = selectionToCleanText(selection);
-      if (!cleanText) return;
+      const payload = buildCleanPayloadFromSelection(selection);
+      if (!payload?.text) return;
 
       event.preventDefault();
       event.stopImmediatePropagation();
       event.clipboardData?.clearData();
-      event.clipboardData?.setData('text/plain', cleanText);
-      event.clipboardData?.setData('text/html', toSimpleHtmlFromText(cleanText));
-      logDebug('cut text =>', cleanText);
+      event.clipboardData?.setData('text/plain', payload.text);
+      event.clipboardData?.setData('text/html', payload.html || payload.text);
+      logDebug('cut text =>', payload.text);
     },
     true
   );
